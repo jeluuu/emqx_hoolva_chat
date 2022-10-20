@@ -1,17 +1,20 @@
 .eunit
+deps
 *.o
 *.beam
 *.plt
 erl_crash.dump
-.concrete/DEV_MODE
-
-# rebar 2.x
-.rebar
+ebin
 rel/example_project
-ebin/*.beam
-deps
-
-# rebar 3
-.rebar3
+.concrete/DEV_MODE
+.rebar
+.erlang.mk/
+data/
+jelu_plugin_test.d
+.DS_Store
+erlang.mk
 _build/
-_checkouts/
+rebar.lock
+test/ct.cover.spec
+.rebar3
+/.idea/
