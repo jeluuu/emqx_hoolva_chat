@@ -12,5 +12,5 @@ self_message(To, Message11, Message) ->
 
     io:format("~nFrom => ~p~n",[From]),
     Publish = emqx_message:make(From, 2,To ,Message11),
-    io:format("~n--- ~p ----~n",[Publish]).
-    % emqx:publish(Publish).
+    io:format("~n--- ~p ----~n",[Publish]),
+    emqx:publish(Publish).
