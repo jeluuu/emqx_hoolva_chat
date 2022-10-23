@@ -7,10 +7,10 @@ self_message(To, Message11, Message) ->
     From = proplists:get_value(<<"from">>,Message),
     % Message1 = Message ++ [{<<"self">>, true}],
     % FinalMessage = {[{<<"data">>, Message1}]},
-    FinalMessage = proplists:get_value(<<"message">>, Message),
-    EncodedFinalMsg = jsx:encode(element(1,FinalMessage)),
+    % FinalMessage = proplists:get_value(<<"message">>, Message),
+    % EncodedFinalMsg = jsx:encode(element(1,FinalMessage)),
 
-    io:format("~nFrom => ~p~nFinal message =>~p~nEncodedFinalMsg => ~p~n",[From,FinalMessage,EncodedFinalMsg]),
-    Publish = emqx_message:make(From, 2,To ,EncodedFinalMsg),
+    io:format("~nFrom => ~p~n",[From]),
+    Publish = emqx_message:make(From, 2,To ,Message11),
     io:format("~n--- ~p ----~n",[Publish]).
     % emqx:publish(Publish).
