@@ -33,7 +33,9 @@ publish(Message) ->
         <<"Connection Closed abnormally..!">> ->
             io:format("\nmqtt client closed successfully...!\n");
         _ ->
-            DecodedMessage= element(2,hd(jsx:decode(element(8,Message)))),
+            io:format("~n ------- checking jsx ----- ~n"),
+            % DecodedMessage= element(2,hd(jsx:decode(element(8,Message)))),
+            DecodedMessage = jsx:decode(element(8,Message)),
             io:format("sent message publish : ~p ~n",[DecodedMessage]),
             Topic = proplists:get_value(<<"to_id">>,DecodedMessage),
             From = proplists:get_value(<<"from">>,DecodedMessage),
@@ -41,3 +43,4 @@ publish(Message) ->
             Date = proplists:get_value(<<"time">>,DecodedMessage),
             emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage)
         end.
+
