@@ -39,5 +39,5 @@ publish(Message) ->
             From = proplists:get_value(<<"from">>,DecodedMessage),
             Message1 = proplists:get_value(<<"message">>,DecodedMessage),
             Date = proplists:get_value(<<"time">>,DecodedMessage),
-            emqx_hoolva_chat_utils:self_message(Topic,Message1,Message)
+            emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage)
         end.
