@@ -35,9 +35,10 @@ publish(Message) ->
         _ ->
             io:format("~n ------- checking jsx ----- ~n"),
             % DecodedMessage= [element(2,hd(jsx:decode(element(8,Message))))],
-            DecodedMessage = [jsx:decode(element(8,Message))],
+            DecodedMessage = jsx:decode(element(8,Message)),
             io:format("sent message publish : ~p ~n",[DecodedMessage]),
             Topic = proplists:get_value(<<"to_id">>,DecodedMessage),
+            io:format("to_id => ~p~n", [Topic]),
             From = proplists:get_value(<<"from">>,DecodedMessage),
             Message1 = proplists:get_value(<<"message">>,DecodedMessage),
             Date = proplists:get_value(<<"time">>,DecodedMessage),
