@@ -1,19 +1,31 @@
 -module(emqx_hoolva_chat_actions).
 
-% -behaviour(tivan_server).
+-behaviour(tivan_server).
 
 -export([
     init/1
   , publish/1
 %   , store/1
+  ,put_chat/1
+  ,get_chat/0
+  ,get_chat/1
 ]).
 
-% start_link() ->
-%     tivan_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+start_link() ->
+    tivan_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+
+put_chat(Chat) when is_map(Chat) ->
+    tivan_server:put(?MODULE, chats, Chat).
+
+get_chat() ->
+  get_chat(#{}).
+
+get_chat(Options) when is_map(Options) ->
+  tivan_server:get(?MODULE, chats, Options).
 
 init([]) ->
     TableDefs = #{
-        chat => #{columns => #{to_id => #{type => binary
+        chats => #{columns => #{to_id => #{type => binary
                                         , limit => 30
                                         , null => false}
                                 , from_id => #{type => binary}
@@ -42,6 +54,20 @@ publish(Message) ->
             From = proplists:get_value(<<"from">>,DecodedMessage),
             Message1 = proplists:get_value(<<"message">>,DecodedMessage),
             Date = proplists:get_value(<<"time">>,DecodedMessage),
+
+            ChatOutput = #{to_id => Topic
+                        , from_id => From
+                        , message => Message1
+                        , time => Date
+                    },
+            case get_chat(#{to_id => Topic}) of
+                [] ->
+                    io:format("~nno to_id found ..so creating new ~n"),
+                    put_chat(ChatOutput);
+                [R] ->
+                    io:format("~n already exist ~n")
+                end,
+
             emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage)
         end.
 
