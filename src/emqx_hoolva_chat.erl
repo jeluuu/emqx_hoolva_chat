@@ -47,7 +47,7 @@
 -export([ on_message_publish/2
         , on_message_delivered/3
         , on_message_acked/3
-        , on_message_dropped/4
+        , on_message_dropped/3
         ]).
 
 %% Called when the plugin application start
@@ -149,16 +149,25 @@ on_message_publish(Message, _Env) ->
     io:format("Publish ~s~n", [emqx_message:format(Message)]),
     {ok, Message}.
 
-on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
-    ok;
-on_message_dropped(#{node := Node}, Message, _Reason, _Env) ->
-    io:format("-------Message 1 --- ~s and node ~s ~n",[Message,Node]);
-on_message_dropped(#{client_id := ClientId}, Message, _Reason, _Env) ->
-    io:format("-------Message 2 --- ~s and node ~s ~n",[Message,ClientId]);
+% on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
+%     ok;
 
-on_message_dropped(Message, _By = #{node := Node}, Reason, _Env) ->
-    io:format("Message dropped by node ~s due to ~s: ~s~n",
-              [Node, Reason, emqx_message:format(Message)]).
+on_message_dropped(_By, #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
+    ok;
+on_message_dropped(#{node := Node}, Message, _Env) ->
+    io:format("-------Message 1 --- ~s and node ~s ~n",[Message,Node]);
+on_message_dropped(#{client_id := ClientId}, Message, _Env) ->
+    io:format("-------Message 2 --- ~s and node ~s ~n",[Message,ClientId]).
+
+
+% on_message_dropped(#{node := Node}, Message, _Reason, _Env) ->
+%     io:format("-------Message 1 --- ~s and node ~s ~n",[Message,Node]);
+% on_message_dropped(#{client_id := ClientId}, Message, _Reason, _Env) ->
+%     io:format("-------Message 2 --- ~s and node ~s ~n",[Message,ClientId]);
+
+% on_message_dropped(Message, _By = #{node := Node}, Reason, _Env) ->
+%     io:format("Message dropped by node ~s due to ~s: ~s~n",
+%               [Node, Reason, emqx_message:format(Message)]).
 
 on_message_delivered(_ClientInfo = #{clientid := ClientId}, Message, _Env) ->
     io:format("Message delivered to client(~s): ~s~n",
