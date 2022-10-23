@@ -34,7 +34,7 @@ publish(Message) ->
             io:format("\nmqtt client closed successfully...!\n");
         _ ->
             io:format("~n ------- checking jsx ----- ~n"),
-            DecodedMessage= element(2,hd(jsx:decode(element(8,Message)))),
+            DecodedMessage= [element(2,hd(jsx:decode(element(8,Message))))],
             % DecodedMessage = jsx:decode(element(8,Message)),
             io:format("sent message publish : ~p ~n",[DecodedMessage]),
             Topic = proplists:get_value(<<"to_id">>,DecodedMessage),
