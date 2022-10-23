@@ -3,7 +3,7 @@
 -export([self_message/3]).
 
 self_message(To, Message1, Message) ->
-    io:format("reached self_message3\n"),
+    io:format("reached self_message\n to : ~p~nmessage1 : ~p~nMessage :~p~n",[To,Message1,Message]),
     From = proplists:get_value(<<"from">>,Message),
     % Message1 = Message ++ [{<<"self">>, true}],
     FinalMessage = {[{<<"data">>, Message1}]},
