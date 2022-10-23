@@ -4,7 +4,7 @@
 
 -export([
     init/1
-%   , publish/1
+  , publish/1
 %   , store/1
 ]).
 
@@ -25,3 +25,14 @@ init([]) ->
         % topic => #{colums => #{}}
     },
     {ok, TableDefs}.
+
+publish(Message) ->
+    io:format("Message publish EMQX : ~p",[Message]),       %published by emqx payload
+    MsgCheck = element(8,Message),
+    case MsgCheck of
+        <<"Connection Closed abnormally..!">> ->
+            io:format("\nmqtt client closed successfully...!\n");
+        _ ->
+            DecodedMessage= element(2,hd(jsx:decode(element(8,Message)))),
+            io:format("sent message publish : ~p \n",[DecodedMessage])
+        end.
