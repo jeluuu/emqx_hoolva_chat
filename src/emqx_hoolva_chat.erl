@@ -151,6 +151,11 @@ on_message_publish(Message, _Env) ->
 
 on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
     ok;
+on_message_dropped(#{node := Node}, Message, _Reason, _Env) ->
+    io:format("-------Message 1 --- ~s and node ~s ~n",[Message,Node]);
+on_message_dropped(#{client_id := ClientId}, Message, _Reason, _Env) ->
+    io:format("-------Message 2 --- ~s and node ~s ~n",[Message,ClientId]);
+
 on_message_dropped(Message, _By = #{node := Node}, Reason, _Env) ->
     io:format("Message dropped by node ~s due to ~s: ~s~n",
               [Node, Reason, emqx_message:format(Message)]).
