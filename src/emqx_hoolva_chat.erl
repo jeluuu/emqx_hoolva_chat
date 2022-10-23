@@ -47,7 +47,7 @@
 -export([ on_message_publish/2
         , on_message_delivered/3
         , on_message_acked/3
-        , on_message_dropped/3
+        , on_message_dropped/4
         ]).
 
 %% Called when the plugin application start
@@ -152,11 +152,11 @@ on_message_publish(Message, _Env) ->
 % on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
 %     ok;
 
-on_message_dropped(_By, #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
+on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
     ok;
-on_message_dropped(#{node := Node}, Message, _Env) ->
+on_message_dropped(Message, #{node := Node}, _Reason, _Env) ->
     io:format("-------Message 1 --- ~s and node ~s ~n",[Message,Node]);
-on_message_dropped(#{client_id := ClientId}, Message, _Env) ->
+on_message_dropped(Message, #{client_id := ClientId}, _Reason, _Env) ->
     io:format("-------Message 2 --- ~s and node ~s ~n",[Message,ClientId]).
 
 
