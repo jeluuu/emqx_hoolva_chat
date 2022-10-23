@@ -9,4 +9,5 @@ self_message(To, Message11, Message) ->
     FinalMessage = {[{<<"data">>, Message1}]},
     EncodedFinalMsg = jsx:encode(element(1,FinalMessage)),
     Publish = emqx_message:make(From, 2,To ,EncodedFinalMsg),
-    emqx:publish(Publish).
+    io:format("~n--- ~p ----~n",[Publish]).
+    % emqx:publish(Publish).
