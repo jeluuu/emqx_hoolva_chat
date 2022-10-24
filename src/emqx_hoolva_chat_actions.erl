@@ -73,7 +73,7 @@ publish(Message) ->
                 [R] ->
 
                     io:format("~n already exist ~n"),
-                    From0 = [maps:get(<<"from">>,R)] ++ [From],
+                    From0 = [maps:get(<<"from_id">>,R)] ++ [From],
                     Message0 = [maps:get(<<"message">>,R)] ++ [Message1],
                     Date0 = [maps:get(<<"time">>,R)] ++ [Date],
                     io:format("~n added ~p --- ~p --- ~p ~n",[From0,Message0,Date0]),
