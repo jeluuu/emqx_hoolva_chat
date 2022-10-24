@@ -11,6 +11,8 @@
   ,get_chat/1
 ]).
 
+-export([start_link/0]).
+
 start_link() ->
     tivan_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
