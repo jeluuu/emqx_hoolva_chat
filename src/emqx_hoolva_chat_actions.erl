@@ -78,8 +78,8 @@ publish(Message) ->
                     Date0 = maps:get(time,R) ++ [Date],
                     io:format("~n added ~p --- ~p --- ~p ~n",[From0,Message0,Date0]),
 
-                    ChatOutput1 = #{to_id => Topic
-                        , from_id => From0
+                    ChatOutput1 = R#{
+                         from_id => From0
                         , message => Message0
                         , time => Date0
                     },
