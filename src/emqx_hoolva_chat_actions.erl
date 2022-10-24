@@ -73,7 +73,7 @@ publish(Message) ->
 
                     io:format("~n already exist ~n"),
 
-                    ChatOutput1 = #{from_id => From
+                    ChatOutput1 = R#{from_id => From
                         , message => Message1
                         , time => Date
                     },
