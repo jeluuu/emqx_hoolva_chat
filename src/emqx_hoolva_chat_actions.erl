@@ -59,9 +59,9 @@ publish(Message) ->
             emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage),
 
             ChatOutput = #{to_id => Topic
-                        , from_id => From
-                        , message => Message1
-                        , time => Date
+                        , from_id => [From]
+                        , message => [Message1]
+                        , time => [Date]
                     },
             case get_chat(#{to_id => Topic}) of
                 [] ->
