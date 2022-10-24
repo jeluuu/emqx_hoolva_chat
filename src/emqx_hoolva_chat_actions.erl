@@ -30,9 +30,9 @@ init([]) ->
         chats => #{columns => #{to_id => #{type => binary
                                         , limit => 30
                                         , null => false}
-                                , from_id => #{type => [binary]}
-                                , message => #{type => [binary]}
-                                , time => #{type => [binary]}
+                                , from_id => #{type => binary}
+                                , message => #{type => binary}
+                                , time => #{type => binary}
                                 }
                         ,audit => true
                   }
@@ -59,9 +59,9 @@ publish(Message) ->
             emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage),
 
             ChatOutput = #{to_id => Topic
-                        , from_id => [From]
-                        , message => [Message1]
-                        , time => [Date]
+                        , from_id => From
+                        , message => Message1
+                        , time => Date
                     },
             put_chat(ChatOutput)
             %case get_chat(#{to_id => Topic}) of
