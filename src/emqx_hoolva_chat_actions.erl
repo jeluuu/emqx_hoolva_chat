@@ -32,7 +32,7 @@ init([]) ->
                                         , null => false}
                                 , from_id => #{type => binary}
                                 , message => #{type => binary}
-                                , time => #{type => integer}
+                                , time => #{type => binary}
                                 }
                         ,audit => true
                   }
