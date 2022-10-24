@@ -66,7 +66,9 @@ publish(Message) ->
             case get_chat(#{to_id => Topic}) of
                 [] ->
                     io:format("~nno to_id found ..so creating new ~n"),
-                    put_chat(ChatOutput);
+                    put_chat(ChatOutput),
+                    P = get_chat(#{to_id => Topic}),
+                    io:format("~n tivan ---- get_chat ~p ~n",[P]);
                 [R] ->
                     io:format("~n already exist ~n")
                 end
