@@ -26,5 +26,9 @@ start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
-    {ok, { {one_for_all, 0, 1}, []} }.
-
+    % {ok, { {one_for_all, 0, 1}, []} }.
+    SupFlags = #{strategy => one_for_one,
+               intensity => 10,
+               period => 10},
+    ChildSpecs = [ #{id => emqx_hoolva_chat_actions, start => {emqx_hoolva_chat_actions, start_link, []}} ],
+    {ok, {SupFlags, ChildSpecs}}.
