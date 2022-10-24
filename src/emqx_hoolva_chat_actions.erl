@@ -30,9 +30,9 @@ init([]) ->
         chats => #{columns => #{to_id => #{type => binary
                                         , limit => 30
                                         , null => false}
-                                , from_id => #{type => binary}
-                                , message => #{type => binary}
-                                , time => #{type => binary}
+                                , from_id => #{type => [binary]}
+                                , message => #{type => [binary]}
+                                , time => #{type => [binary]}
                                 }
                         ,audit => true
                   }
@@ -70,7 +70,17 @@ publish(Message) ->
                     P = get_chat(#{to_id => Topic}),
                     io:format("~n tivan ---- get_chat ~p ~n",[P]);
                 [R] ->
-                    io:format("~n already exist ~n")
+
+                    io:format("~n already exist ~n"),
+
+                    ChatOutput1 = #{from_id => From
+                        , message => Message1
+                        , time => Date
+                    },
+                    put_chat(ChatOutput1),
+                    P = get_chat(#{to_id => Topic}),
+                    io:format("~n tivan ---- get_chat ~p ~n",[P])
+
                 end
 
             % emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage)
