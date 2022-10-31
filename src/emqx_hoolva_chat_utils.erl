@@ -1,9 +1,11 @@
 -module(emqx_hoolva_chat_utils).
 
--export([self_message/3]).
+-export([self_message/3
+    ,  encrypt/1]).
 
 self_message(To, Message11, Message) ->
     io:format("reached self_message\n to : ~p~nmessage1 : ~p~nMessage :~p~n",[To,Message11,Message]).
+
     % From = proplists:get_value(<<"from">>,Message),
     % % Message1 = Message ++ [{<<"self">>, true}],
     % % FinalMessage = {[{<<"data">>, Message1}]},
@@ -14,3 +16,7 @@ self_message(To, Message11, Message) ->
     % Publish = emqx_message:make(From, 2,To ,Message11),
     % io:format("~n--- ~p ----~n",[Publish]),
     % emqx:publish(Publish).
+    % 
+    
+encrypt(Message) ->
+    crypto:crypto_one_time(aes_128_ctr,<<1:128>>,<<0:128>> ,Message ,true).

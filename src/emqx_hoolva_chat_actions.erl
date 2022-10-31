@@ -55,12 +55,15 @@ publish(Message) ->
             io:format("to_id => ~p~n", [Topic]),
             From = proplists:get_value(<<"from">>,DecodedMessage),
             Message1 = proplists:get_value(<<"message">>,DecodedMessage),
+            %change
+            Message2 = emqx_hoolva_chat_utils:encrypt(Message1),
+            % --
             Date = proplists:get_value(<<"time">>,DecodedMessage),
             %emqx_hoolva_chat_utils:self_message(Topic,Message1,DecodedMessage),
 
             ChatOutput = #{to_id => Topic
                         , from_id => From
-                        , message => Message1
+                        , message => Message2
                         , time => Date
                     },
             put_chat(ChatOutput)
